@@ -25,7 +25,7 @@ public class LoginSteps {
 
     @Given("que eu estou na página de login")
     public void openLoginPage() throws IOException {
-       // WebDriverManager.chromedriver().setup();
+       WebDriverManager.chromedriver().setup();
       //  driver = new ChromeDriver();
       ChromeOptions options = new ChromeOptions();
 
