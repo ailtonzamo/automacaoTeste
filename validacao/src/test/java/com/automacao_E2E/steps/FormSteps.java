@@ -22,7 +22,8 @@ public class FormSteps {
       ChromeOptions options = new ChromeOptions();
      // String tempDir = Files.createTempDirectory("chrome-user-data").toString();
      // options.addArguments("--user-data-dir=" + tempDir);  
-      options.addArguments("--user-data-dir=/tmp/chrome_session_unique");
+     // options.addArguments("--user-data-dir=/tmp/chrome_session_unique");
+      options.addArguments("--user-data-dir=/tmp/chrome_user_data_" + System.currentTimeMillis());
         driver = new ChromeDriver(options);
 
         //driver = new ChromeDriver();
