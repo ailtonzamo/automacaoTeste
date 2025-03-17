@@ -28,6 +28,7 @@ jobs:
           server-password: GITHUB_TOKEN
           overwrite-settings: true
           
+
       - name: Instalar Google Chrome Estável
         run: |
           sudo apt-get update
@@ -49,10 +50,11 @@ jobs:
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
-      - name: Validar versões instaladas
+      - name: Validar versões do Chrome e do ChromeDriver
         run: |
           google-chrome --version
           /home/runner/chromedriver --version
+          
       - name: Verificar diretório
         run: ls -l validacao
 
