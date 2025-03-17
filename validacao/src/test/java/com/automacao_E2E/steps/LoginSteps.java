@@ -25,6 +25,7 @@ public class LoginSteps {
 
     @Given("que eu estou na página de login")
     public void openLoginPage() throws IOException {
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
         options.addArguments("--user-data-dir=" + uniqueDir);

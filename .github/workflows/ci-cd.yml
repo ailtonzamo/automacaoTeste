@@ -36,15 +36,13 @@ jobs:
           sudo apt-get remove -y google-chrome-stable || true
           sudo apt-get autoremove -y
 
-      - name: Install Chrome and ChromeDriver
-        run: |
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
-          wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip"
-          unzip chromedriver.zip
-          sudo mv chromedriver /usr/bin/chromedriver
-          sudo chmod +x /usr/bin/chromedriver
+      - name: Install Compatible ChromeDriver
+  run: |
+    CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
+    wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip" || echo "Version not found"
+    unzip chromedriver.zip || echo "Skipping unzip"
+    sudo mv chromedriver /usr/bin/chromedriver || echo "Skipping move"
+    sudo chmod +x /usr/bin/chromedriver || echo "Skipping chmod"
 
       - name: Adicionar repositório do Google Chrome e instalar
         run: |
@@ -66,15 +64,11 @@ jobs:
 
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
-
+      
       - name: Set Unique Temp Directory
         run: |
           export UNIQUE_TEMP_DIR="/tmp/chrome_${{ github.run_id }}_$RANDOM"
           mkdir -p $UNIQUE_TEMP_DIR
-
-
-
-
 
       - name: Verificar diretório
         run: ls -l validacao
