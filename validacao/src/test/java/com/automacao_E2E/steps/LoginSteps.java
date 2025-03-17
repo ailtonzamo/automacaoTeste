@@ -30,7 +30,7 @@ public class LoginSteps {
        // String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
        // options.addArguments("--user-data-dir=" + uniqueDir);
         options.addArguments("--remote-allow-origins=*");
-        
+        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
         WebDriver driver = new ChromeDriver(options);
 
         // Maximizar a janela e acessar o formulário

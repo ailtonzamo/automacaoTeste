@@ -22,7 +22,7 @@ public class FormSteps {
      //String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
     // options.addArguments("--user-data-dir=" + uniqueDir);
      options.addArguments("--remote-allow-origins=*");
-     
+     options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
      WebDriver driver = new ChromeDriver(options);
         driver.get("https://demoqa.com/automation-practice-form");
         formPage = new FormPage(driver); // Inicializa o Page Object

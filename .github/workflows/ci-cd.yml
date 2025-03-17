@@ -1,96 +1,40 @@
-name: CI/CD Pipeline for Tests
+name: Selenium Pipeline
 
 on:
   push:
     branches:
       - master
-      - main
-  pull_request:
 
 jobs:
-  # Exemplos dos jobs descritos anteriormente
-  build:
+  selenium-tests:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout Código
         uses: actions/checkout@v3
 
-      - name: Configurar Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'temurin' # Pode usar 'temurin', 'zulu', ou outras distribuições disponíveis
-          java-package: 'jdk'
-          check-latest: false
-          server-id: github
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
-          overwrite-settings: true
-
- 
-      - name: Remover qualquer versão existente do Chrome
+      - name: Instalar Dependências do Navegador
         run: |
-          sudo rm -rf /opt/google/chrome
-          sudo rm -f /usr/bin/google-chrome
-          sudo apt-get remove -y google-chrome-stable || true
-          sudo apt-get autoremove -y
-
-      - name: Install Compatible ChromeDriver
-        run: |
-         CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
-          wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip" || echo "Version not found"
-           unzip chromedriver.zip || echo "Skipping unzip"
-           sudo mv chromedriver /usr/bin/chromedriver || echo "Skipping move"
-            sudo chmod +x /usr/bin/chromedriver || echo "Skipping chmod"
-
-      - name: Adicionar repositório do Google Chrome e instalar
-        run: |
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          google-chrome --version
-      - name: Instalar Chromium
-        run: |
-         sudo apt-get update
-         sudo apt-get install -y chromium-browser
-         chromium-browser --version
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
 
-      - name: Validar versões instaladas
+      - name: Instalar ChromeDriver Compatível
         run: |
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
+          wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip"
+          unzip chromedriver.zip
+          sudo mv chromedriver /usr/bin/chromedriver
+          sudo chmod +x /usr/bin/chromedriver
           google-chrome --version
           chromedriver --version
 
-      - uses: browser-actions/setup-chrome@latest
-      - run: chrome --version
-      
-      - name: Set Unique Temp Directory
+      - name: Limpar Diretórios e Processos
         run: |
-          export UNIQUE_TEMP_DIR="/tmp/chrome_${{ github.run_id }}_$RANDOM"
-          mkdir -p $UNIQUE_TEMP_DIR
+          pkill -9 chrome || true
+          pkill -9 chromedriver || true
+          rm -rf /tmp/chrome*
 
-      - name: Verificar diretório
-        run: ls -l validacao
-
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Executar testes com Maven
-        run: |
-          cd validacao
-          mvn test -X
-
-      - name: Save test artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: validacao/target/surefire-reports
-
-
-
+      - name: Executar Testes com Maven
+        run: mvn test -X
