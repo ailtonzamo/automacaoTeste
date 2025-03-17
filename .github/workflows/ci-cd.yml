@@ -55,6 +55,24 @@ jobs:
          sudo apt-get install -y chromium-browser
          chromium-browser --version
 
+      - name: Atualizar ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
+          echo "Versão do Chrome detectada: $CHROME_VERSION"
+          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          if [ -z "$CHROMEDRIVER_VERSION" ]; then
+            echo "Erro: Não foi possível obter a versão do ChromeDriver para o Chrome $CHROME_VERSION"
+            exit 1
+          fi
+          wget -q https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          unzip -o chromedriver_linux64.zip -d /usr/bin/
+          chmod +x /usr/bin/chromedriver
+          echo "ChromeDriver atualizado com sucesso."
+
+      - name: Validar versões instaladas
+        run: |
+          google-chrome --version
+          chromedriver --version
 
 
       - name: Verificar diretório
