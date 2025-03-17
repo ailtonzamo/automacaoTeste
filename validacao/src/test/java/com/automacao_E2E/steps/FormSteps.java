@@ -20,11 +20,11 @@ public class FormSteps {
       //  System.setProperty("webdriver.chrome.driver", "caminho/para/chromedriver");
       
       ChromeOptions options = new ChromeOptions();
-     // String tempDir = Files.createTempDirectory("chrome-user-data").toString();
-     // options.addArguments("--user-data-dir=" + tempDir);  
-     // options.addArguments("--user-data-dir=/tmp/chrome_session_unique");
-      options.addArguments("--user-data-dir=/tmp/chrome_user_data_" + System.currentTimeMillis());
-        driver = new ChromeDriver(options);
+      String uniqueDir = "/tmp/chrome_session_" + System.currentTimeMillis();
+      options.addArguments("--user-data-dir=" + uniqueDir);
+      // Permitir origens remotas
+      options.addArguments("--remote-allow-origins=*");   
+      WebDriver driver = new ChromeDriver(options);
 
         //driver = new ChromeDriver();
         driver.get("https://demoqa.com/automation-practice-form");

@@ -29,14 +29,10 @@ public class LoginSteps {
       //  driver = new ChromeDriver();
       ChromeOptions options = new ChromeOptions();
 
-      // Diretório temporário único
-     // String tempDir = Files.createTempDirectory("chrome-user-data").toString();
-     // options.addArguments("--user-data-dir=" + tempDir);options.addArguments("--user-data-dir=/tmp/chrome_user_data_" + System.currentTimeMillis());
-     options.addArguments("--user-data-dir=/tmp/chrome_user_data_" + System.currentTimeMillis());   
-    //  options.addArguments("--user-data-dir=/tmp/chrome_session_unique");
-
+      String uniqueDir = "/tmp/chrome_session_" + System.currentTimeMillis();
+      options.addArguments("--user-data-dir=" + uniqueDir);
       // Permitir origens remotas
-  //    options.addArguments("--remote-allow-origins=*");     
+      options.addArguments("--remote-allow-origins=*");     
   WebDriver driver = new ChromeDriver(options);
 
 
