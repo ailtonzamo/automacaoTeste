@@ -64,11 +64,5 @@ jobs:
       - name: Verificar diretório
         run: ls -l validacao
 
-      - name: Instalar dependências Maven
-        run: |
-          cd validacao
-          mvn install
-
-
       - name: Executar Testes
         run: mvn test
