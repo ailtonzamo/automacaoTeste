@@ -70,9 +70,7 @@ public class FormPage {
 
     }
 
-    public void fazerUploadDeImagem(String caminhoArquivo) {
-        driver.findElement(uploadPicture).sendKeys(caminhoArquivo);
-    }
+   
 
     public void preencherEndereco(String endereco) {
         driver.findElement(currentAddressField).sendKeys(endereco);

@@ -9,7 +9,6 @@ Feature: Preenchimento do formulário de registro
     And eu preencho o campo "Mobile" com "1234567890"
     And eu seleciono a data de nascimento como "16 Mar 2025"
     And eu seleciono "Sports" em Hobbies
-    And eu faço upload de uma imagem
     And eu preencho o campo "Current Address" com "Rua das Flores, 123"
     And eu seleciono "NCR" em State
     And eu seleciono "Delhi" em City

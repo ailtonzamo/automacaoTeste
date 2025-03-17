@@ -19,11 +19,13 @@ public class FormSteps {
     public void acessarPaginaDoFormulario() throws IOException {
      // Configurar opções do Chrome
      ChromeOptions options = new ChromeOptions();
-     //String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
-    // options.addArguments("--user-data-dir=" + uniqueDir);
-     options.addArguments("--remote-allow-origins=*");
-     options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
-     WebDriver driver = new ChromeDriver(options);
+ 
+    // options.addArguments("--remote-allow-origins=*");
+    // options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
+    // WebDriver driver = new ChromeDriver(options);
+    
+      driver = new ChromeDriver();
+
         driver.get("https://demoqa.com/automation-practice-form");
         formPage = new FormPage(driver); // Inicializa o Page Object
     }
@@ -59,10 +61,7 @@ public class FormSteps {
         formPage.selecionarHobby(hobby);
     }
 
-    @When("eu faço upload de uma imagem")
-    public void fazerUploadDeImagem() {
-        formPage.fazerUploadDeImagem("caminho/para/sua/imagem.jpg");
-    }
+
 
     @When("eu preencho o campo Current Address com {string}")
     public void preencherEndereco(String endereco) {

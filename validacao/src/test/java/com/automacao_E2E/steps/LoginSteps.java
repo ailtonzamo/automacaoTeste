@@ -13,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.automacao_E2E.pages.DashboardPage;
 import com.automacao_E2E.pages.LoginPage;
+import com.aventstack.extentreports.util.Assert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -27,12 +28,12 @@ public class LoginSteps {
     public void openLoginPage() throws IOException {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-       // String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
-       // options.addArguments("--user-data-dir=" + uniqueDir);
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
+    
+       options.addArguments("--remote-allow-origins=*");
+       options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
         WebDriver driver = new ChromeDriver(options);
 
+      //  WebDriver driver = new ChromeDriver();
         // Maximizar a janela e acessar o formulário
         driver.manage().window().maximize();
 
@@ -60,12 +61,19 @@ public class LoginSteps {
         dashboardPage = new DashboardPage(driver);
         String title = dashboardPage.getPageTitle();
         assertTrue(title.contains("Secure Area page for Automation Testing Practice"));
+     //       driver.quit();
+
+   
     }
 
     @And("o título da página deve conter {string}")
     public void validatePageTitle(String expectedTitle) {
+         dashboardPage = new DashboardPage(driver); // O driver precisa estar inicializado aqui
         String title = dashboardPage.getPageTitle();
         assertTrue(title.contains(expectedTitle));
-        driver.quit();
+
+      //  String title = dashboardPage.getPageTitle();
+      //  assertTrue(title.contains(expectedTitle));
+   //     driver.quit();
     }
 }
