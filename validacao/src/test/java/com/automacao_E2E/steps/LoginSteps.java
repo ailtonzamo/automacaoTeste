@@ -27,13 +27,14 @@ public class LoginSteps {
     public void openLoginPage() throws IOException {
        WebDriverManager.chromedriver().setup();
       //  driver = new ChromeDriver();
-      ChromeOptions options = new ChromeOptions();
+     
 
     //  String uniqueDir = "/tmp/chrome_session_" + System.currentTimeMillis();
     //  options.addArguments("--user-data-dir=" + uniqueDir);
       // Permitir origens remotas
-      options.addArguments("--remote-allow-origins=*");     
-  WebDriver driver = new ChromeDriver(options);
+      ChromeOptions options = new ChromeOptions();
+      String uniqueDir = System.getenv("UNIQUE_TEMP_DIR");
+      options.addArguments("--user-data-dir=" + uniqueDir);
 
 
 

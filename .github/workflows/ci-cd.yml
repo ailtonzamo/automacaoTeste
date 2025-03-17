@@ -62,6 +62,15 @@ jobs:
 
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
+      
+      - name: Set Unique Temp Directory
+        run: |
+          export UNIQUE_TEMP_DIR="/tmp/chrome_${{ github.run_id }}_$RANDOM"
+          mkdir -p $UNIQUE_TEMP_DIR
+
+
+
+
 
       - name: Verificar diretório
         run: ls -l validacao
