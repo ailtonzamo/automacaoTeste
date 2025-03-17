@@ -33,19 +33,15 @@ jobs:
           pkill -9 chrome || true
           pkill -9 chromedriver || true
 
-      - name: Atualizar ChromeDriver
+      - name: Atualizar ChromeDriver com Versão Estável
         run: |
           CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
           echo "Versão do Chrome detectada: $CHROME_VERSION"
-          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-          if [ -z "$CHROMEDRIVER_VERSION" ]; then
-            echo "Erro: Não foi possível obter a versão do ChromeDriver para o Chrome $CHROME_VERSION"
-            exit 1
-          fi
-          echo "Versão do ChromeDriver recomendada: $CHROMEDRIVER_VERSION"
-          wget -q --show-progress https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION || curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
+
 
       - name: Verificar versão do Chrome e ChromeDriver
         run: |
