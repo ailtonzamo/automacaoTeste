@@ -4,6 +4,9 @@ import io.cucumber.java.en.*;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.nio.file.Files;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,12 +24,17 @@ public class LoginSteps {
     private DashboardPage dashboardPage;
 
     @Given("que eu estou na página de login")
-    public void openLoginPage() {
+    public void openLoginPage() throws IOException {
        // WebDriverManager.chromedriver().setup();
       //  driver = new ChromeDriver();
-       ChromeOptions options = new ChromeOptions();
-       options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
-       options.addArguments("--remote-allow-origins=*");        
+      ChromeOptions options = new ChromeOptions();
+
+      // Diretório temporário único
+      String tempDir = Files.createTempDirectory("chrome-user-data").toString();
+      options.addArguments("--user-data-dir=" + tempDir);
+
+      // Permitir origens remotas
+      options.addArguments("--remote-allow-origins=*");     
        driver = new ChromeDriver(options);
 
 

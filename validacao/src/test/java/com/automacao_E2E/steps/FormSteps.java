@@ -1,6 +1,10 @@
 package com.automacao_E2E.steps;
 
 import io.cucumber.java.en.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,12 +16,12 @@ public class FormSteps {
     FormPage formPage;
 
     @Given("que eu estou na página do formulário de registro")
-    public void acessarPaginaDoFormulario() {
+    public void acessarPaginaDoFormulario() throws IOException {
       //  System.setProperty("webdriver.chrome.driver", "caminho/para/chromedriver");
       
       ChromeOptions options = new ChromeOptions();
-      options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
-        options.addArguments("--remote-allow-origins=*");        
+      String tempDir = Files.createTempDirectory("chrome-user-data").toString();
+      options.addArguments("--user-data-dir=" + tempDir);  
         driver = new ChromeDriver(options);
 
         //driver = new ChromeDriver();
