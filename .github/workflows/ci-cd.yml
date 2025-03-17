@@ -42,7 +42,13 @@ jobs:
           pkill -9 chromedriver || true
           rm -rf /tmp/chrome*
 
-      - name: Executar Testes com Maven
+      - name: Executar testes com Maven
         run: |
-          cd automacaoTeste # Substitua pelo diretório correto
+          cd validacao
           mvn test -X
+
+      - name: Save test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: validacao/target/surefire-reports
