@@ -49,16 +49,10 @@ jobs:
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
-      - name: Finalizar processos antigos
-        run: |
-          pkill -9 chrome || true
-          pkill -9 chromedriver || true
-
       - name: Validar versões instaladas
         run: |
           google-chrome --version
           /home/runner/chromedriver --version
-
       - name: Verificar diretório
         run: ls -l validacao
 
