@@ -43,4 +43,6 @@ jobs:
           rm -rf /tmp/chrome*
 
       - name: Executar Testes com Maven
-        run: mvn test -X
+        run: |
+          cd automacaoTeste # Substitua pelo diretório correto
+          mvn test -X
