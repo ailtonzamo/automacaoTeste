@@ -27,7 +27,7 @@ jobs:
           server-username: GITHUB_ACTOR
           server-password: GITHUB_TOKEN
           overwrite-settings: true
-          
+
       - name: Finalizar processos Chrome
         run: |
           pkill -9 chrome || true
@@ -37,7 +37,8 @@ jobs:
         run: |
           CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
           wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip -d /usr/bin/
+          unzip -o chromedriver_linux64.zip -d /home/runner
+          echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
 
       - name: Verificar diretório
