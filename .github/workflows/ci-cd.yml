@@ -31,11 +31,11 @@ jobs:
 
 
       - name: Verificar diretório
-        run: ls -l TesteApi/validacao
+        run: ls -l /validacao
 
       - name: Instalar dependências Maven
         run: |
-          cd TesteApi/validacao
+          cd /validacao
           mvn install
 
 
