@@ -30,8 +30,9 @@ public class LoginSteps {
       ChromeOptions options = new ChromeOptions();
 
       // Diretório temporário único
-      String tempDir = Files.createTempDirectory("chrome-user-data").toString();
-      options.addArguments("--user-data-dir=" + tempDir);
+     // String tempDir = Files.createTempDirectory("chrome-user-data").toString();
+     // options.addArguments("--user-data-dir=" + tempDir);
+      options.addArguments("--user-data-dir=/tmp/chrome_session_unique");
 
       // Permitir origens remotas
       options.addArguments("--remote-allow-origins=*");     

@@ -20,8 +20,9 @@ public class FormSteps {
       //  System.setProperty("webdriver.chrome.driver", "caminho/para/chromedriver");
       
       ChromeOptions options = new ChromeOptions();
-      String tempDir = Files.createTempDirectory("chrome-user-data").toString();
-      options.addArguments("--user-data-dir=" + tempDir);  
+     // String tempDir = Files.createTempDirectory("chrome-user-data").toString();
+     // options.addArguments("--user-data-dir=" + tempDir);  
+      options.addArguments("--user-data-dir=/tmp/chrome_session_unique");
         driver = new ChromeDriver(options);
 
         //driver = new ChromeDriver();
