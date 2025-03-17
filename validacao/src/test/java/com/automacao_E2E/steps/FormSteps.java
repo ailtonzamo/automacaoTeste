@@ -18,19 +18,12 @@ public class FormSteps {
     @Given("que eu estou na página do formulário de registro")
     public void acessarPaginaDoFormulario() throws IOException {
      // Configurar opções do Chrome
-        ChromeOptions options = new ChromeOptions();
-        String uniqueDir = System.getenv("UNIQUE_TEMP_DIR");
-        if (uniqueDir == null) {
-            uniqueDir = "/tmp/default_chrome_session"; // Diretório temporário padrão
-        }
-        options.addArguments("--user-data-dir=" + uniqueDir);
-        options.addArguments("--remote-allow-origins=*");
-
-        // Inicializar o WebDriver
-        WebDriver driver = new ChromeDriver(options);
-
-        // Maximizar a janela e acessar o formulário
-        driver.manage().window().maximize();
+     ChromeOptions options = new ChromeOptions();
+     String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
+     options.addArguments("--user-data-dir=" + uniqueDir);
+     options.addArguments("--remote-allow-origins=*");
+     
+     WebDriver driver = new ChromeDriver(options);
         driver.get("https://demoqa.com/automation-practice-form");
         formPage = new FormPage(driver); // Inicializa o Page Object
     }

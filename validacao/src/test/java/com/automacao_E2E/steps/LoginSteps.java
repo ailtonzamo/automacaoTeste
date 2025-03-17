@@ -26,14 +26,10 @@ public class LoginSteps {
     @Given("que eu estou na página de login")
     public void openLoginPage() throws IOException {
         ChromeOptions options = new ChromeOptions();
-        String uniqueDir = System.getenv("UNIQUE_TEMP_DIR");
-        if (uniqueDir == null) {
-            uniqueDir = "/tmp/default_chrome_session"; // Diretório temporário padrão
-        }
+        String uniqueDir = "/tmp/chrome_session_" + System.nanoTime();
         options.addArguments("--user-data-dir=" + uniqueDir);
         options.addArguments("--remote-allow-origins=*");
-
-        // Inicializar o WebDriver
+        
         WebDriver driver = new ChromeDriver(options);
 
         // Maximizar a janela e acessar o formulário
