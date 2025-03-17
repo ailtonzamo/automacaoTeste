@@ -33,17 +33,18 @@ jobs:
           pkill -9 chrome || true
           pkill -9 chromedriver || true
 
-     
       - name: Atualizar ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
+          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
           wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
-      - name: Verificar versão do Chrome
-        run: google-chrome --version
+      - name: Verificar versão do Chrome e ChromeDriver
+        run: |
+          google-chrome --version
+          /home/runner/chromedriver --version
 
       - name: Verificar diretório
         run: ls -l validacao
