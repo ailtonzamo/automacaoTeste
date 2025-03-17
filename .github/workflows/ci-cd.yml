@@ -64,8 +64,22 @@ jobs:
       - name: Verificar diretório
         run: ls -l validacao
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Executar testes com Maven
         run: |
-          cd validacao # Substitua por onde está o pom.xml
-          mvn test
+          cd validacao
+          mvn test -X
+
+      - name: Save test artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: validacao/target/surefire-reports
 
