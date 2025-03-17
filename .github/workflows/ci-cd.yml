@@ -50,11 +50,11 @@ jobs:
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
-      - name: Validar versões do Chrome e do ChromeDriver
+      - name: Validar versões
         run: |
           google-chrome --version
           /home/runner/chromedriver --version
-          
+
       - name: Verificar diretório
         run: ls -l validacao
 
