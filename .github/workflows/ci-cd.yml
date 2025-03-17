@@ -33,20 +33,27 @@ jobs:
           pkill -9 chrome || true
           pkill -9 chromedriver || true
 
-      - name: Atualizar ChromeDriver com Versão Estável
+      - name: Atualizar ChromeDriver
         run: |
           CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
           echo "Versão do Chrome detectada: $CHROME_VERSION"
           CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION || curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          if [ -z "$CHROMEDRIVER_VERSION" ]; then
+            echo "Erro: Não foi possível determinar a versão do ChromeDriver."
+            exit 1
+          fi
+          echo "Versão do ChromeDriver recomendada: $CHROMEDRIVER_VERSION"
+          wget -q --show-progress https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
-
-      - name: Verificar versão do Chrome e ChromeDriver
+      - name: Validar URL do ChromeDriver
         run: |
-          google-chrome --version
-          /home/runner/chromedriver --version
+          URL="https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          if ! curl --head --fail "$URL"; then
+            echo "Erro: URL inválida para o ChromeDriver: $URL"
+            exit 1
+          fi
 
       - name: Verificar diretório
         run: ls -l validacao
