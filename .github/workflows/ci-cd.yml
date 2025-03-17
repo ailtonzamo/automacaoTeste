@@ -29,17 +29,17 @@ jobs:
           overwrite-settings: true
 
  
-      - name: Remover qualquer versão existente do Chrome
+       - name: Remover qualquer versão existente do Chrome
         run: |
-         sudo rm -rf /opt/google/chrome
-         sudo rm -f /usr/bin/google-chrome
-         sudo rm -f /usr/bin/chromedriver
+          sudo rm -rf /opt/google/chrome
+          sudo rm -f /usr/bin/google-chrome
+          sudo apt-get remove -y google-chrome-stable || true
+          sudo apt-get autoremove -y
 
-      - name: Instalar Google Chrome Estável
+      - name: Instalar uma versão específica do Google Chrome
         run: |
-          sudo apt-get update
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
+          wget https://dl.google.com/linux/chrome/deb/stable/google-chrome-stable_113.0.5672.126-1_amd64.deb
+          sudo dpkg -i google-chrome-stable_113.0.5672.126-1_amd64.deb || sudo apt-get -f install -y
           google-chrome --version
 
       - name: Atualizar ChromeDriver
@@ -56,7 +56,7 @@ jobs:
           unzip -o chromedriver_linux64.zip -d /home/runner
           echo "PATH=/home/runner:$PATH" >> $GITHUB_ENV
 
-      - name: Validar versões
+      - name: Validar versões instaladas
         run: |
           google-chrome --version
           /home/runner/chromedriver --version
