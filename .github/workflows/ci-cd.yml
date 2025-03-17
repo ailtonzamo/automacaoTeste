@@ -30,8 +30,9 @@ jobs:
 
       - name: Instalar dependências Maven
         run: |
-          cd TesteApi/validacao # Caminho relativo para o pom.xml
+          cd ProjetoDev/TesteApi/validacao
           mvn install
+
 
       - name: Executar Testes
         run: mvn test
