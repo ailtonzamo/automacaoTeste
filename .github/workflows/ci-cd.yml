@@ -64,5 +64,8 @@ jobs:
       - name: Verificar diretório
         run: ls -l validacao
 
-      - name: Executar Testes
-        run: mvn test
+      - name: Executar testes com Maven
+        run: |
+          cd validacao # Substitua por onde está o pom.xml
+          mvn test
+
