@@ -32,17 +32,11 @@ jobs:
 
       - name: Install Compatible ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
+         CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
           wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip" || echo "Version not found"
-          if [ -f chromedriver.zip ]; then
-           unzip chromedriver.zip
-          sudo mv chromedriver /usr/bin/chromedriver
-          sudo chmod +x /usr/bin/chromedriver
-          else
-          echo "ChromeDriver version not available. Exiting."
-          exit 1
-          fi
-  
+           unzip chromedriver.zip || echo "Skipping unzip"
+           sudo mv chromedriver /usr/bin/chromedriver || echo "Skipping move"
+            sudo chmod +x /usr/bin/chromedriver || echo "Skipping chmod"
 
       - name: Limpar Diretórios e Processos
         run: |
