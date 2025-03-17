@@ -37,12 +37,12 @@ jobs:
           sudo apt-get autoremove -y
 
       - name: Install Compatible ChromeDriver
-  run: |
-    CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
-    wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip" || echo "Version not found"
-    unzip chromedriver.zip || echo "Skipping unzip"
-    sudo mv chromedriver /usr/bin/chromedriver || echo "Skipping move"
-    sudo chmod +x /usr/bin/chromedriver || echo "Skipping chmod"
+        run: |
+         CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
+          wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip" || echo "Version not found"
+           unzip chromedriver.zip || echo "Skipping unzip"
+           sudo mv chromedriver /usr/bin/chromedriver || echo "Skipping move"
+            sudo chmod +x /usr/bin/chromedriver || echo "Skipping chmod"
 
       - name: Adicionar repositório do Google Chrome e instalar
         run: |
