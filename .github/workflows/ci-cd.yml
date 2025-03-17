@@ -60,6 +60,8 @@ jobs:
           google-chrome --version
           chromedriver --version
 
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
 
       - name: Verificar diretório
         run: ls -l validacao
