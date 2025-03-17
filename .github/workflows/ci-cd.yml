@@ -30,19 +30,18 @@ jobs:
           google-chrome --version
           chromedriver --version
 
-      - name: Instalar ChromeDriver Compatível
+      - name: Adicionar repositório do Google Chrome e instalar
         run: |
-         CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
-          wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION.0/chromedriver_linux64.zip" || \
-          wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/LATEST_RELEASE/chromedriver_linux64.zip"
-          if [ -f chromedriver.zip ]; then
-          unzip chromedriver.zip
-          sudo mv chromedriver /usr/bin/chromedriver
-          sudo chmod +x /usr/bin/chromedriver
-          else
-          echo "ChromeDriver não encontrado. Falha na instalação."
-          exit 1
-          fi
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          google-chrome --version
+      - name: Instalar Chromium
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y chromium-browser
+         chromium-browser --version
 
 
 
