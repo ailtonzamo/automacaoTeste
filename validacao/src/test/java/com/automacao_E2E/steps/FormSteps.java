@@ -3,6 +3,7 @@ package com.automacao_E2E.steps;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.automacao_E2E.pages.FormPage;
 
@@ -13,7 +14,13 @@ public class FormSteps {
     @Given("que eu estou na página do formulário de registro")
     public void acessarPaginaDoFormulario() {
       //  System.setProperty("webdriver.chrome.driver", "caminho/para/chromedriver");
-        driver = new ChromeDriver();
+      
+      ChromeOptions options = new ChromeOptions();
+      options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
+        options.addArguments("--remote-allow-origins=*");        
+        driver = new ChromeDriver(options);
+
+        //driver = new ChromeDriver();
         driver.get("https://demoqa.com/automation-practice-form");
         driver.manage().window().maximize();
         formPage = new FormPage(driver); // Inicializa o Page Object

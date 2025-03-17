@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.automacao_E2E.pages.DashboardPage;
 import com.automacao_E2E.pages.LoginPage;
@@ -21,8 +22,15 @@ public class LoginSteps {
 
     @Given("que eu estou na página de login")
     public void openLoginPage() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+       // WebDriverManager.chromedriver().setup();
+      //  driver = new ChromeDriver();
+       ChromeOptions options = new ChromeOptions();
+       options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
+       options.addArguments("--remote-allow-origins=*");        
+       driver = new ChromeDriver(options);
+
+
+
         driver.get("https://practice.expandtesting.com/login");
         loginPage = new LoginPage(driver);
     }
