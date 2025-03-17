@@ -1,0 +1,28 @@
+name: CI/CD Pipeline for Tests
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+
+jobs:
+  # Exemplos dos jobs descritos anteriormente
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      - name: Instalar dependências Maven
+        run: mvn install
+
+      - name: Executar Testes
+        run: mvn test
