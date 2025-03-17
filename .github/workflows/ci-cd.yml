@@ -29,7 +29,9 @@ jobs:
           overwrite-settings: true
 
       - name: Instalar dependências Maven
-        run: mvn install
+        run: |
+          cd TesteApi/validacao # Caminho relativo para o pom.xml
+          mvn install
 
       - name: Executar Testes
         run: mvn test
