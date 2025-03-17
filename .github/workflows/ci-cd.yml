@@ -57,12 +57,6 @@ jobs:
 
 
 
-
-      - name: Validar versões instaladas
-        run: |
-          google-chrome --version
-          /home/runner/chromedriver --version
-
       - name: Verificar diretório
         run: ls -l validacao
 
