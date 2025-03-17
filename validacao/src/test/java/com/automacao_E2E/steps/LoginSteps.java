@@ -37,7 +37,7 @@ public class LoginSteps {
 
       // Permitir origens remotas
   //    options.addArguments("--remote-allow-origins=*");     
-       driver = new ChromeDriver(options);
+  WebDriver driver = new ChromeDriver(options);
 
 
 
