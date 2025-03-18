@@ -1,9 +1,16 @@
 package com.automacao_E2E.pages;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.automacao_E2E.steps.DriverManager;
 
 public class FormPage {
     private WebDriver driver;
@@ -24,7 +31,7 @@ public class FormPage {
 
     // Construtor para inicializar o WebDriver
     public FormPage(WebDriver driver) {
-        this.driver = driver;
+        this.driver = DriverManager.getDriver();;
     }
 
     // Métodos de interação com os elementos da página
@@ -53,7 +60,14 @@ public class FormPage {
     }
 
     public void preencherMobile(String mobile) {
-        driver.findElement(mobileField).sendKeys(mobile);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement campoNumero = wait.until(ExpectedConditions.elementToBeClickable(mobileField));
+        campoNumero.sendKeys(mobile);
+        
+        
+      //  driver.findElement(mobileField).sendKeys(mobile);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
     }
 
     public void selecionarDataDeNascimento(String month, String year, String day) {
@@ -76,14 +90,46 @@ public class FormPage {
         driver.findElement(currentAddressField).sendKeys(endereco);
     }
 
-    public void selecionarEstadoECidade(String estado, String cidade) {
+    public void selecionarEstado(String estado) {
         driver.findElement(stateDropdown).click();
         driver.findElement(By.xpath("//div[contains(text(), '" + estado + "')]")).click();
-        driver.findElement(cityDropdown).click();
-        driver.findElement(By.xpath("//div[contains(text(), '" + cidade + "')]")).click();
+
     }
 
-    public void clicarSubmit() {
-        driver.findElement(submitButton).click();
+   public void selecionarCidade(String cidade) {
+        driver.findElement(cityDropdown).click();
+        driver.findElement(By.xpath("//div[contains(text(), '" + cidade + "')]")).click();
+        
+
+        
+
+    }
+
+
+    public void clicarSubmit() throws InterruptedException {
+      
+         WebElement elemento = driver.findElement(submitButton);
+ 
+         elemento.sendKeys(Keys.RETURN);
+        // Aguarde 5 segundos
+        Thread.sleep(5000); // O tempo é em milissegundos (5000 = 5 segundos)
+
+      
+
+
+        
+
+
+    }
+
+    public String validarMensagem (){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement modalTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("example-modal-sizes-title-lg")));
+        
+        // Capture o texto do modal
+        String modalText = modalTitle.getText();
+        return modalText;
+         
+
     }
 }

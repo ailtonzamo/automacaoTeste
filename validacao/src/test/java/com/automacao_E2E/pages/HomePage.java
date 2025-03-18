@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.automacao_E2E.steps.DriverManager;
+
 import groovyjarjarantlr4.v4.parse.ANTLRParser.elementEntry_return;
 
 import java.time.Duration;
@@ -23,7 +25,7 @@ public class HomePage {
     private By cartTotal = By.id("cart-total");
 
     public HomePage(WebDriver driver) {
-        this.driver = driver;
+        this.driver = DriverManager.getDriver();
     }
     
 

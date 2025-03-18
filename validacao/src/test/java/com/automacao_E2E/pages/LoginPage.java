@@ -5,16 +5,21 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginPage {
+import com.automacao_E2E.steps.DriverManager;
+
+public class LoginPage  {
     private WebDriver driver;
 
     private By usernameField = By.id("username");
     private By passwordField = By.id("password");
     private By loginButton = By.xpath("//button[@type='submit']");
+   // private By pageTitle = By.cssSelector("div.flash");
+
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+       this.driver=DriverManager.getDriver();
     }
 
     public void enterUsername(String username) {
@@ -27,8 +32,17 @@ public class LoginPage {
 
     public void clickLoginButton() {
         WebElement elemento = driver.findElement(loginButton);
-         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elemento);
+      //  elemento.click();
+      //   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elemento);
          elemento.sendKeys(Keys.RETURN);
+
+       //  System.out.println("entrou aquiii "+driver.findElement(pageTitle).getText());
+     
        
     }
+
+
+
+
+
 }
